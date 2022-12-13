@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeoMovie.Data;
+using NeoMovie.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,18 +34,20 @@ namespace NeoMovie
             
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddDefaultUI()
-                    .AddDefaultTokenProviders()
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddRazorPages();
+
+            //services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            //        .AddDefaultUI()
+            //        .AddDefaultTokenProviders()
+            //        .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
 
             //Register a custom set of services to be used throughout the application
             //services.AddHttpClient();
-            //services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             //services.AddSingleton<IImageService, BasicImageService>();
             //services.AddScoped<IRemoteMovieService, TMDBMovieService>();
