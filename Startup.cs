@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeoMovie.Data;
 using NeoMovie.Models.Settings;
+using NeoMovie.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,18 +31,18 @@ namespace NeoMovie
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    ConnectionService.GetConnectionString(Configuration)));
             
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //        .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
 
-            //services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-            //        .AddDefaultUI()
-            //        .AddDefaultTokenProviders()
-            //        .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders()
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
 
@@ -53,7 +54,7 @@ namespace NeoMovie
             //services.AddScoped<IRemoteMovieService, TMDBMovieService>();
             //services.AddScoped<IDataMappingService, TMDBMappingService>();
 
-            //services.AddTransient<SeedService>();
+            services.AddTransient<SeedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
