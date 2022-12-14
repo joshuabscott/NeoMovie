@@ -9,6 +9,6 @@ namespace NeoMovie.Models.Settings
     {
         public NeoMovieSettings NeoMovieSettings { get; set; }
 
-        public TMDBSettings TMDBSettingsSettings { get; set; }
+        public TMDBSettings TMDBSettings { get; set; }
     }
 }

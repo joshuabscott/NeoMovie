@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using NeoMovie.Data;
 using NeoMovie.Models.Settings;
 using NeoMovie.Services;
+using NeoMovie.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,12 +48,12 @@ namespace NeoMovie
             services.AddControllersWithViews();
 
             //Register a custom set of services to be used throughout the application
-            //services.AddHttpClient();
+            services.AddHttpClient();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            //services.AddSingleton<IImageService, BasicImageService>();
-            //services.AddScoped<IRemoteMovieService, TMDBMovieService>();
-            //services.AddScoped<IDataMappingService, TMDBMappingService>();
+            services.AddSingleton<IImageService, BasicImageService>();
+            services.AddScoped<IRemoteMovieService, TMDBMovieService>();
+            services.AddScoped<IDataMappingService, TMDBMappingService>();
 
             services.AddTransient<SeedService>();
         }
