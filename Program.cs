@@ -31,5 +31,6 @@ namespace NeoMovie
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
