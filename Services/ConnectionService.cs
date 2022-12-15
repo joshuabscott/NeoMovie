@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeoMovie.Services
 {
-    public class ConnectionService
+    public static class ConnectionService
     {
         public static string GetConnectionString(IConfiguration configuration)
         {
@@ -15,7 +15,9 @@ namespace NeoMovie.Services
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
         }
-        public static string BuildConnectionString(string databaseUrl)
+
+        //build the connection string from the environment. i.e. Heroku / Railway
+        private static string BuildConnectionString(string databaseUrl)
         {
             var databaseUri = new Uri(databaseUrl);
             var userInfo = databaseUri.UserInfo.Split(':');
