@@ -75,9 +75,6 @@ namespace NeoMovie.Controllers
         }
 
 
-
-
-
         // Get Create
         public IActionResult Create()
         {
@@ -113,20 +110,35 @@ namespace NeoMovie.Controllers
 
 
         // GET: Temp/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int? id, bool local = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Movie movie = new();
+            if (local)
+            {
+                //Get the Movie data straight from the DB
+                movie = await _context.Movie.Include(m => m.Cast)
+                                            .Include(m => m.Crew)
+                                            .FirstOrDefaultAsync(m => m.Id == id);
+            }
+            else
+            {
+                //Get the movie data from the TMDB API
+                var movieDetail = await _tmdbMovieService.MovieDetailAsync((int)id);
+                movie = await _tmdbMappingService.MapMovieDetailAsync(movieDetail);
+            }
+
             if (movie == null)
             {
                 return NotFound();
             }
 
+            ViewData["Local"] = local;
             return View(movie);
         }
 
@@ -225,7 +237,6 @@ namespace NeoMovie.Controllers
         {
             return _context.Movie.Any(e => e.Id == id);
         }
-
 
 
 
