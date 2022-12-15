@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NeoMovie.Controllers
 {
-    //[Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     public class MovieCollectionsController : Controller
     {
         private readonly ApplicationDbContext _context;

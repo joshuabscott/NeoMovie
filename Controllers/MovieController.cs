@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace NeoMovie.Controllers
 {
-    public class MovieController : Controller
+    public class MoviesController : Controller
     {
         private readonly AppSettings _appSettings;
         private readonly ApplicationDbContext _context;
@@ -22,7 +22,7 @@ namespace NeoMovie.Controllers
         private readonly IRemoteMovieService _tmdbMovieService;
         private readonly IDataMappingService _tmdbMappingService;
 
-        public MovieController(IOptions<AppSettings> appSettings, ApplicationDbContext context, IImageService imageService, IRemoteMovieService tmdbMovieService, IDataMappingService tmdbMappingServcie)
+        public MoviesController(IOptions<AppSettings> appSettings, ApplicationDbContext context, IImageService imageService, IRemoteMovieService tmdbMovieService, IDataMappingService tmdbMappingServcie)
         {
             _appSettings = appSettings.Value;
             _context = context;
