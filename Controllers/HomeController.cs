@@ -28,7 +28,7 @@ namespace NeoMovie.Controllers
 
         public async Task<IActionResult> Index()
         {
-            const int count = 18;
+            const int count = 16;
 
             var data = new LandingPageVM()
             {

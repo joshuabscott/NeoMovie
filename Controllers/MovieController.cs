@@ -87,8 +87,8 @@ namespace NeoMovie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,MovieId,Title,TagLine,Overview,RunTime,ReleaseDate,Rating,VoteAverage,Poster,PosterType,Backdrop,BackdropType,TrailerUrl")] Movie movie)
-        public async Task<IActionResult> Create([Bind("Title,MovieId,TagLine,Overview,ReleaseDate,Rating,TrailerUrl,PosterFile,BackdropFile")] Movie movie, int collectionId)
+        public async Task<IActionResult> Create([Bind("Id,MovieId,Title,TagLine,Overview,RunTime,ReleaseDate,Rating,VoteAverage,Poster,PosterType,Backdrop,BackdropType,TrailerUrl")] Movie movie, int collectionId)
+        //public async Task<IActionResult> Create([Bind("Title,MovieId,TagLine,Overview,ReleaseDate,Rating,TrailerUrl,PosterFile,BackdropFile")] Movie movie, int collectionId)
         {
 
             if (ModelState.IsValid)
@@ -96,7 +96,7 @@ namespace NeoMovie.Controllers
                 movie.PosterType = movie.PosterFile?.ContentType;
                 movie.Poster = await _imageService.EncodeImageAsync(movie.PosterFile);
 
-                movie.BackdropType = movie.BackdropFile?.ContentType; ;
+                movie.BackdropType = movie.BackdropFile?.ContentType;
                 movie.Backdrop = await _imageService.EncodeImageAsync(movie.BackdropFile);
 
                 _context.Add(movie);
@@ -121,14 +121,14 @@ namespace NeoMovie.Controllers
             Movie movie = new();
             if (local)
             {
-                //Get the Movie data straight from the DB
+                // Get the Movie data straight from the DB
                 movie = await _context.Movie.Include(m => m.Cast)
                                             .Include(m => m.Crew)
                                             .FirstOrDefaultAsync(m => m.Id == id);
             }
             else
             {
-                //Get the movie data from the TMDB API
+                // Get the movie data from API
                 var movieDetail = await _tmdbMovieService.MovieDetailAsync((int)id);
                 movie = await _tmdbMappingService.MapMovieDetailAsync(movieDetail);
             }
@@ -264,6 +264,5 @@ namespace NeoMovie.Controllers
             );
             await _context.SaveChangesAsync();
         }
-
     }
 }

@@ -56,17 +56,11 @@ namespace NeoMovie
             services.AddScoped<IDataMappingService, TMDBMappingService>();
 
             services.AddTransient<SeedService>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            ////ADD Data Helper
-            //app.Services.CreateScope();
-            ////get database update with the latest migration
-            //await DataHelper.ManageDataAsync(Scope.ServiceProvider);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

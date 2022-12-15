@@ -51,7 +51,7 @@ namespace NeoMovie.Services
                 //{                   
                 //    newMovie.Cast.Add(new MovieCast()
                 //    {
-                //        CastID = cast.id,
+                //        CastId = cast.id,
                 //        Department = cast.known_for_department,
                 //        Name = cast.name,
                 //        Character = cast.character,                        
@@ -64,7 +64,7 @@ namespace NeoMovie.Services
                 {
                     newMovie.Cast.Add(new MovieCast()
                     {
-                        CastID = member.id,
+                        CastId = member.id,
                         Department = member.known_for_department,
                         Name = member.name,
                         Character = member.character,
@@ -77,7 +77,7 @@ namespace NeoMovie.Services
                 {
                     newMovie.Crew.Add(new MovieCrew()
                     {
-                        CrewID = crew.id,
+                        CrewId = crew.id,
                         Department = crew.department,
                         Name = crew.name,
                         Job = crew.job,
