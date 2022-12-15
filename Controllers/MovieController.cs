@@ -31,14 +31,14 @@ namespace NeoMovie.Controllers
             _tmdbMappingService = tmdbMappingServcie;
         }
 
-        // Get
+        // GET
         public async Task<IActionResult> Import()
         {
             var movies = await _context.Movie.ToListAsync();
             return View(movies);
         }
 
-        // Post
+        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Import(int id)
@@ -75,14 +75,14 @@ namespace NeoMovie.Controllers
         }
 
 
-        // Get Create
+        // GET
         public IActionResult Create()
         {
             ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");
             return View();
         }
 
-        // Post Create
+        // POST
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -109,7 +109,7 @@ namespace NeoMovie.Controllers
         }
 
 
-        // GET: Temp/Details/5
+        // GET: Details/5
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id, bool local = false)
         {
@@ -142,7 +142,7 @@ namespace NeoMovie.Controllers
             return View(movie);
         }
 
-        // GET: Temp/Edit/5
+        // GET: Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -158,7 +158,7 @@ namespace NeoMovie.Controllers
             return View(movie);
         }
 
-        // POST: Temp/Edit/5
+        // POST: Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -204,7 +204,7 @@ namespace NeoMovie.Controllers
             return View(movie);
         }
 
-        // GET: Temp/Delete/5
+        // GET: Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -222,7 +222,7 @@ namespace NeoMovie.Controllers
             return View(movie);
         }
 
-        // POST: Temp/Delete/5
+        // POST: Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
