@@ -32,9 +32,16 @@ namespace NeoMovie.Services
         public async Task ManageDataAsync()
         {
             await _dbContext.Database.MigrateAsync();
+            await UpdateDatabaseAsync();
             await SeedRolesAsync();
             await SeedUsersAsync();
             await SeedCollections();
+        }
+
+        // Add missing method
+        private async Task UpdateDatabaseAsync()
+        {
+            await _dbContext.Database.MigrateAsync();
         }
 
         private async Task SeedRolesAsync()
