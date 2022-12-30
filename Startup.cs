@@ -28,31 +28,34 @@ namespace NeoMovie
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services) // Switch to async Task from "Void" due to DataHelper
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
                     ConnectionService.GetConnectionString(Configuration)));
-
+            
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            //        .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddRazorPages();
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders()
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
 
+            //Register a custom set of services to be used throughout the application
+            services.AddHttpClient();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            services.AddRazorPages();
-
-            services.AddTransient<SeedService>();
-            services.AddHttpClient();
+            services.AddSingleton<IImageService, BasicImageService>();
             services.AddScoped<IRemoteMovieService, TMDBMovieService>();
             services.AddScoped<IDataMappingService, TMDBMappingService>();
-            services.AddSingleton<IImageService, BasicImageService>();
+
+            services.AddTransient<SeedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
