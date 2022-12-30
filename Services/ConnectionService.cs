@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeoMovie.Services
 {
-    public class ConnectionService
+    public static class ConnectionService
     {
         public static string GetConnectionString(IConfiguration configuration)
         {

@@ -28,7 +28,7 @@ namespace NeoMovie.Services
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        // SeedService.cs:line 36, 51
+        // SeedService.cs:line 24, 36, 51
         public async Task ManageDataAsync()
         {
             await _dbContext.Database.MigrateAsync();
