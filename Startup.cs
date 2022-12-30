@@ -28,34 +28,31 @@ namespace NeoMovie
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services) // Switch to async Task from "Void" due to DataHelper
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
                     ConnectionService.GetConnectionString(Configuration)));
-            
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //        .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages();
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddDefaultUI()
-                    .AddDefaultTokenProviders()
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
 
-            //Register a custom set of services to be used throughout the application
-            services.AddHttpClient();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            services.AddSingleton<IImageService, BasicImageService>();
-            services.AddScoped<IRemoteMovieService, TMDBMovieService>();
-            services.AddScoped<IDataMappingService, TMDBMappingService>();
+            services.AddRazorPages();
 
             services.AddTransient<SeedService>();
+            services.AddHttpClient();
+            services.AddScoped<IRemoteMovieService, TMDBMovieService>();
+            services.AddScoped<IDataMappingService, TMDBMappingService>();
+            services.AddSingleton<IImageService, BasicImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

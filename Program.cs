@@ -18,9 +18,9 @@ namespace NeoMovie
             var host = CreateHostBuilder(args).Build();
 
             var dataService = host.Services
-                                    .CreateScope()
-                                    .ServiceProvider
-                                    .GetRequiredService<SeedService>();
+                                  .CreateScope()
+                                  .ServiceProvider
+                                  .GetRequiredService<SeedService>();
             
             await dataService.ManageDataAsync();
             host.Run();
